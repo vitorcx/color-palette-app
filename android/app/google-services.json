@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "460887766422",
+    "project_id": "colorpaletteapp1",
+    "storage_bucket": "colorpaletteapp1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460887766422:android:9f97665631c49848e4d9b7",
+        "android_client_info": {
+          "package_name": "com.example.color_palette"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460887766422-3gqhus76udoo5g5016507cj3nlpdq8hn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2kvTL5Ky5GyRUjD513yft860bjWDf3uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460887766422-3gqhus76udoo5g5016507cj3nlpdq8hn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
