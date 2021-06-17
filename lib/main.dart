@@ -59,7 +59,8 @@ class _ColorPaletteAppState extends State<ColorPaletteApp> {
                 );
               }
               return Center(
-                  child: CircularProgressIndicator(color: Colors.black));
+                  child:
+                      CircularProgressIndicator(backgroundColor: Colors.black));
             },
           ),
         ));
