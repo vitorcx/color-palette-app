@@ -1,22 +1,18 @@
 import 'package:bloc/bloc.dart';
-/*import 'package:color_palette/models/color_palette_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:color_palette/models/color_palette_model.dart';
 
-enum ColorPaletteEvent { addColorPalette, removeColorPalette }
+//TODO: importar a color palette event e state
 
-class ColorPaletteBloc extends Bloc<ColorPaletteEvent, List<ColorPalette>> {
-  ColorPaletteBloc() : super([]);
+// TODO: criar classe para estado e para o evento
+class PaletteBloc extends Bloc<ColorEvent, ColorState>{
+  PaletteBloc() :super ("0xFFFFFF")
+
 
   @override
-  Stream<List<ColorPalette>> mapEventToState(ColorPaletteEvent event) {
-    switch (event) {
-      case ColorPaletteEvent.addColorPalette:
-      yield 
-        
-        break;
-      default:
-    }
-  }
+  Stream<List<String>> mapEventToState(ColorEvent event) {
+    // TODO: implement mapEventToState
+    // if (event is algumacoisa): ...
+    throw UnimplementedError();
+  }}
 
-  
-}
-*/
