@@ -1,3 +1,5 @@
+import 'package:color_palette/bloc/color_palatte_state.dart';
+import 'package:color_palette/bloc/color_palette_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,12 +17,10 @@ class ListColorPalettes extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.blue[200],
         ),
-        // body: BlocBuilder(
-        //   bloc: palletbloc,
-        //   builder: (context, snapshot) {
-        //             return palletbloc.lista?? Container(child: Text("Você ainda não tem uma paleta de cores :( \n
-        //  experimente cirar uma agora mesmo!", ),)}),
-
+        body: BlocProvider<ColorPaletteBloc>(
+          create: (BuildContext context) => ColorPaletteBloc(ColorPaletteLoading())
+          ,child: BlocBuilder(bloc: ,),),
+          //TODO: FAZER A LISTA DE PALETTES OU O BUILDER AQUI
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: Icon(Icons.add),
