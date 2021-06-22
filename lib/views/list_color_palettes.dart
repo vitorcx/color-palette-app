@@ -33,8 +33,9 @@ class ListColorPalettes extends StatelessWidget {
           } else {
             state as ColorPaletteLoaded;
             return ListView.builder(
-              itemBuilder: (context, item) {
-                return ListTile(title: Text("teste ${state.list[item].title}"));
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text("teste ${state.list[index].title}"));
               },
               itemCount: state.list.length,
             );

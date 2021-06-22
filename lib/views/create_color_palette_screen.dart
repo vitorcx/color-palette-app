@@ -8,12 +8,12 @@ class CreateColorPaletteScreen extends StatelessWidget {
   const CreateColorPaletteScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    List<String> colorsFromNavigator = [
-      '0xffffff',
-      '0xff66ff',
-      '0xffffff',
-      '0xff66ff',
-      '0xffffff'
+    List<int> colorsFromNavigator = [
+      83947283,
+      92377722,
+      88366633,
+      91011123,
+      12345678
     ];
     return Scaffold(
       appBar: AppBar(

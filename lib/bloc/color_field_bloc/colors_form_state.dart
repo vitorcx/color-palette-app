@@ -1,5 +1,5 @@
 class ColorsFormState {
-  late List<String> colors;
+  late List<int> colors;
 
   ColorsFormState(this.colors);
 }

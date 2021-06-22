@@ -1,14 +1,14 @@
 class ColorPalette {
   late final String id;
   late final String title;
-  late final List<String> colors;
+  late final List<int> colors;
 
   ColorPalette({required String id, required this.title, required this.colors});
 
   ColorPalette.fromJson(String id, Map<String, dynamic> json) {
     id = id;
     title = json['title'];
-    colors = json['colors'].cast<String>();
+    colors = json['colors'].cast<int>();
   }
 
   Map<String, dynamic> toJson() {

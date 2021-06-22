@@ -3,8 +3,8 @@ abstract class ColorsFormEvent {
 }
 
 class ChangeColorEvent extends ColorsFormEvent {
-  final List<String> colors;
-  final String newColor;
+  final List<int> colors;
+  final int newColor;
   final int index;
 
   const ChangeColorEvent(

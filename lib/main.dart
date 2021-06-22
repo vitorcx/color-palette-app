@@ -20,8 +20,6 @@ class ColorPaletteApp extends StatefulWidget {
 }
 
 class _ColorPaletteAppState extends State<ColorPaletteApp> {
-  ColorPalette colorPalette = ColorPalette(
-      id: 'test', title: 'Paleta legal 1', colors: ['aaa', 'bbb', 'ccc']);
   final Future<FirebaseApp> _intialization = Firebase.initializeApp();
 
   @override
