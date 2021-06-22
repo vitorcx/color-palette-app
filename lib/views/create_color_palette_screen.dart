@@ -1,4 +1,7 @@
+import 'package:color_palette/bloc/color_field_bloc/color_field_bloc.dart';
+import 'package:color_palette/views/color_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateColorPaletteScreen extends StatelessWidget {
   const CreateColorPaletteScreen({Key? key}) : super(key: key);
@@ -18,32 +21,28 @@ class CreateColorPaletteScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          _buildColorField('d834eb'),
-          _buildColorField('3474eb'),
-          _buildColorField('d834eb'),
-          _buildColorField('3474eb'),
-          _buildColorField('d834eb'),
+          BlocProvider(
+            create: (context) => ColorFieldBloc('d834eb'),
+            child: ColorField(),
+          ),
+          BlocProvider(
+            create: (context) => ColorFieldBloc('3474eb'),
+            child: ColorField(),
+          ),
+          BlocProvider(
+            create: (context) => ColorFieldBloc('d834eb'),
+            child: ColorField(),
+          ),
+          BlocProvider(
+            create: (context) => ColorFieldBloc('3474eb'),
+            child: ColorField(),
+          ),
+          BlocProvider(
+            create: (context) => ColorFieldBloc('d834eb'),
+            child: ColorField(),
+          ),
         ],
       ),
     );
   }
-
-  Widget _buildColorField(String color) {
-    TextEditingController _controller = TextEditingController(text: color);
-    return Stack(
-      children: [
-        ListTile(
-          tileColor: Color(int.parse('0xff${_controller.text}')),
-        ),
-        TextField(
-          controller: _controller,
-          decoration: InputDecoration(
-              fillColor: Colors.transparent,
-              border: InputBorder.none,
-              filled: true),
-        )
-      ],
-    );
-  }
-} //TODO: bolar jeito de onChande alterar a cor do campo em tempo real
-//TODO: bolar jeito de re-gerar todos os campos
+}

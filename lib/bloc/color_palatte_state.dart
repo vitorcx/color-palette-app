@@ -1,6 +1,7 @@
+import 'package:color_palette/models/color_palette_model.dart';
 import 'package:equatable/equatable.dart';
 
-class ColorPaletteState extends Equatable {
+abstract class ColorPaletteState extends Equatable {
   @override
   List<Object> get props => [];
 }
@@ -13,7 +14,8 @@ class ColorPaletteErrorState extends ColorPaletteState {
 }
 
 class ColorPaletteLoaded extends ColorPaletteState {
-  final List<Object> list;
+  final List<ColorPalette> list;
+
   ColorPaletteLoaded({required this.list});
 }
 
