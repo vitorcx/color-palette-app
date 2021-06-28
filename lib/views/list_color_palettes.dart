@@ -4,6 +4,7 @@ import 'package:color_palette/bloc/color_palatte_state.dart';
 import 'package:color_palette/bloc/color_palette_bloc.dart';
 import 'package:color_palette/bloc/color_palette_event.dart';
 import 'package:color_palette/views/create_color_palette_screen.dart';
+import 'package:color_palette/views/empyt_color_pallette_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,19 +60,22 @@ class ListColorPalettes extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (state is ColorPaletteLoaded) {
             return ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                    title: Text("teste ${state.list[index].title}"));
-              },
               itemCount: state.list.length,
+              itemBuilder: (context, index) {
+                return ListTile(title: Text("${state.list[index].title}"),
+                trailing: Icon(Icons.mode_edit_outline_outlined),
+                // onTap: Navigator.of(context).push(MaterialPageRoute(),
+                 
             );
-          } else if (state is ColorPaletteAdded) {
+          });}
+            else if (state is ColorPaletteAdded) {
             bloc.add(ColorPaletteFetchList());
             return Center(child: CircularProgressIndicator());
+          } else if (state is ColorPaletteEmptyList) {
+            return EmpytListPage();
           } else {
             print('Estado não implementado');
             return Container();
           }
-        }));
-  }
-}
+        
+  }));}

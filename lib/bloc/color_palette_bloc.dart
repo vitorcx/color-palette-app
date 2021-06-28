@@ -37,6 +37,7 @@ class ColorPaletteBloc extends Bloc<ColorPaletteEvent, ColorPaletteState> {
         yield ColorPaletteAdded();
         break;
       case ColorPaletteFetchListWithEmptyList:
+        yield ColorPaletteEmptyList();
         break;
       case ColorPaletteFetchListWithError:
         break;
