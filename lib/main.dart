@@ -35,7 +35,7 @@ class _ColorPaletteAppState extends State<ColorPaletteApp> {
             if (snapshot.connectionState == ConnectionState.done) {
               return BlocProvider<ColorPaletteBloc>(
                   create: (context) => ColorPaletteBloc(ColorPaletteLoading()),
-                  child: CreateColorPaletteScreen() /*ListColorPalettes()*/);
+                  child: ListColorPalettes());
             }
             return Center(child: CircularProgressIndicator());
           },

@@ -4,8 +4,6 @@ import 'package:color_palette/bloc/color_field_bloc/colors_form_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'dart:math';
-
 class ColorField extends StatelessWidget {
   final int index;
   const ColorField({Key? key, required this.index}) : super(key: key);
@@ -22,12 +20,8 @@ class ColorField extends StatelessWidget {
                 Text('${state.colors[index]}'),
                 IconButton(
                     onPressed: () {
-                      int newColor = Random().nextInt(0xffffffff);
                       BlocProvider.of<ColorsFormBloc>(context).add(
-                          ChangeColorEvent(
-                              colors: state.colors,
-                              index: index,
-                              newColor: newColor));
+                          ChangeColorEvent(colors: state.colors, index: index));
                     },
                     icon: Icon(Icons.refresh))
               ],

@@ -1,3 +1,4 @@
+import 'package:color_palette/models/color_palette_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ColorPaletteEvent extends Equatable {
@@ -11,7 +12,11 @@ class ColorPaletteDelete extends ColorPaletteEvent {}
 
 class ColorPaletteEdit extends ColorPaletteEvent {}
 
-class ColorPaletteCreate extends ColorPaletteEvent {}
+class ColorPaletteCreate extends ColorPaletteEvent {
+  final ColorPalette newColorPalette;
+
+  ColorPaletteCreate(this.newColorPalette);
+}
 
 class ColorPaletteFetchListWithError extends ColorPaletteEvent {}
 

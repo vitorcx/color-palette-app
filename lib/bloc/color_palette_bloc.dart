@@ -26,6 +26,15 @@ class ColorPaletteBloc extends Bloc<ColorPaletteEvent, ColorPaletteState> {
       case ColorPaletteEdit:
         break;
       case ColorPaletteCreate:
+        event as ColorPaletteCreate;
+        try {
+          final newColorPalette = event.newColorPalette.toJson();
+          await colorPaletteFirebase.addColorPalette(newColorPalette);
+        } catch (e) {
+          yield ColorPaletteErrorState(
+              message: 'Erro ao salvar dados no Firebase.');
+        }
+        yield ColorPaletteAdded();
         break;
       case ColorPaletteFetchListWithEmptyList:
         break;

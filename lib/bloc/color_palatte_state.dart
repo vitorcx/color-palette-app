@@ -19,4 +19,6 @@ class ColorPaletteLoaded extends ColorPaletteState {
   ColorPaletteLoaded({required this.list});
 }
 
+class ColorPaletteAdded extends ColorPaletteState {}
+
 class ColorPaletteEmptyList extends ColorPaletteState {}
