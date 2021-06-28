@@ -6,7 +6,6 @@ import 'package:color_palette/bloc/color_palette_event.dart';
 import 'package:color_palette/views/create_color_palette_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:infinite_listview/infinite_listview.dart';
 
 class ListColorPalettes extends StatelessWidget {
   const ListColorPalettes({Key? key}) : super(key: key);
@@ -58,8 +57,7 @@ class ListColorPalettes extends StatelessWidget {
           bloc.add(ColorPaletteFetchList());
           if (state is ColorPaletteLoading) {
             return Center(child: CircularProgressIndicator());
-          } else {
-            state as ColorPaletteLoaded;
+          } else if (state is ColorPaletteLoaded) {
             return ListView.builder(
               itemBuilder: (context, index) {
                 return ListTile(
@@ -67,6 +65,12 @@ class ListColorPalettes extends StatelessWidget {
               },
               itemCount: state.list.length,
             );
+          } else if (state is ColorPaletteAdded) {
+            bloc.add(ColorPaletteFetchList());
+            return Center(child: CircularProgressIndicator());
+          } else {
+            print('Estado não implementado');
+            return Container();
           }
         }));
   }
