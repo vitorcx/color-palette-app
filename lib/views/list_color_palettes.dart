@@ -60,15 +60,20 @@ class ListColorPalettes extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (state is ColorPaletteLoaded) {
             return ListView.builder(
-              itemCount: state.list.length,
-              itemBuilder: (context, index) {
-                return ListTile(title: Text("${state.list[index].title}"),
-                trailing: Icon(Icons.mode_edit_outline_outlined),
-                // onTap: Navigator.of(context).push(MaterialPageRoute(),
-                 
-            );
-          });}
-            else if (state is ColorPaletteAdded) {
+                itemCount: state.list.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text("${state.list[index].title}"),
+                    trailing: Icon(Icons.edit),
+                    // onTap: Navigator.of(context).push(MaterialPageRoute(),
+                    subtitle: Container(
+                      child: Row(
+                        children: circle_colors(state.list[index].colors),
+                      ),
+                    ),
+                  );
+                });
+          } else if (state is ColorPaletteAdded) {
             bloc.add(ColorPaletteFetchList());
             return Center(child: CircularProgressIndicator());
           } else if (state is ColorPaletteEmptyList) {
@@ -77,5 +82,21 @@ class ListColorPalettes extends StatelessWidget {
             print('Estado não implementado');
             return Container();
           }
-        
-  }));}
+        }));
+  }
+}
+
+List<Widget> circle_colors(List<int> lista) {
+  List<Widget> list = [];
+  for (int i = 0; i < 5; i++) {
+    Widget circulo = Container(
+      decoration: BoxDecoration(
+          shape: BoxShape.circle, color: Color(12345678).withAlpha(0xff)),
+    );
+    list.add(circulo);
+    list.add(SizedBox(
+      height: 330,
+    ));
+  }
+  return list;
+}
