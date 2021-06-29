@@ -24,9 +24,11 @@ class ListColorPalettes extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'Suas Paletas de Cores',
+            style: TextStyle(color: Colors.black),
           ),
           centerTitle: true,
-          elevation: 0,
+          elevation: 10,
+          backgroundColor: Colors.grey,
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -49,9 +51,10 @@ class ListColorPalettes extends StatelessWidget {
             ));
           },
           child: Icon(Icons.add),
-          backgroundColor: Colors.green[700],
+          backgroundColor: Colors.grey[700],
           //Coloquei cores aqui mas não sei se vai ter mesmo
         ),
+        backgroundColor: Colors.grey,
         body: BlocBuilder<ColorPaletteBloc, ColorPaletteState>(
             builder: (context, state) {
           ColorPaletteBloc bloc = BlocProvider.of<ColorPaletteBloc>(context);
@@ -62,13 +65,24 @@ class ListColorPalettes extends StatelessWidget {
             return ListView.builder(
                 itemCount: state.list.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text("${state.list[index].title}"),
-                    trailing: Icon(Icons.edit),
-                    // onTap: Navigator.of(context).push(MaterialPageRoute(),
-                    subtitle: Container(
-                      child: Row(
-                        children: circle_colors(state.list[index].colors),
+                  return ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: ListTile(
+                      title: Text(
+                        "${state.list[index].title}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      trailing: Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
+                      tileColor: Colors.white,
+                      // onTap: Navigator.of(context).push(MaterialPageRoute(),
+                      shape: CircleBorder(side: BorderSide()),
+                      contentPadding: EdgeInsets.all(10),
+                      subtitle: Container(
+                        child: Row(
+                            children: circle_colors(state.list[index].colors)),
                       ),
                     ),
                   );
@@ -89,13 +103,12 @@ class ListColorPalettes extends StatelessWidget {
 List<Widget> circle_colors(List<int> lista) {
   List<Widget> list = [];
   for (int i = 0; i < 5; i++) {
-    Widget circulo = Container(
-      decoration: BoxDecoration(
-          shape: BoxShape.circle, color: Color(12345678).withAlpha(0xff)),
+    Widget circulo = CircleAvatar(
+      backgroundColor: Color(lista[i]),
     );
     list.add(circulo);
     list.add(SizedBox(
-      height: 330,
+      width: 15,
     ));
   }
   return list;
