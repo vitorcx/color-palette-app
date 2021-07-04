@@ -10,7 +10,11 @@ class ColorPaletteFetchList extends ColorPaletteEvent {}
 
 class ColorPaletteDelete extends ColorPaletteEvent {}
 
-class ColorPaletteEdit extends ColorPaletteEvent {}
+class ColorPaletteEdit extends ColorPaletteEvent {
+  final ColorPalette colorPalette;
+
+  ColorPaletteEdit(this.colorPalette);
+}
 
 class ColorPaletteCreate extends ColorPaletteEvent {
   final ColorPalette newColorPalette;

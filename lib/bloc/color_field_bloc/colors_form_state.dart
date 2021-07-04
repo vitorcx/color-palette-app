@@ -1,5 +1,6 @@
 class ColorsFormState {
+  String? title;
   late List<int> colors;
 
-  ColorsFormState(this.colors);
+  ColorsFormState({this.title, required this.colors});
 }

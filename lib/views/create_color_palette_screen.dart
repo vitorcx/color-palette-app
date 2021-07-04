@@ -7,17 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateColorPaletteScreen extends StatefulWidget {
+  final bool editing;
+
+  CreateColorPaletteScreen({required this.editing});
+
   @override
   _CreateColorPaletteScreenState createState() =>
       _CreateColorPaletteScreenState();
 }
 
 class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
-  final TextEditingController _controller =
-      TextEditingController(text: 'Nova Paleta');
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    ColorsFormBloc bloc = BlocProvider.of<ColorsFormBloc>(context);
+    _controller.text = bloc.state.title ?? 'Nova Paleta';
     AppBar appBar =
         AppBar(title: Text('Nova Paleta de Cores'), centerTitle: true);
     double screenHeight = MediaQuery.of(context).size.height -
@@ -52,12 +57,9 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
-                  List<int> colors =
-                      BlocProvider.of<ColorsFormBloc>(context).state.colors;
-                  final newColorPalette = ColorPalette(
-                      id: '', colors: colors, title: _controller.text);
-                  BlocProvider.of<ColorPaletteBloc>(context)
-                      .add(ColorPaletteCreate(newColorPalette));
+                  widget.editing
+                      ? editExistingColorPalette(context)
+                      : saveNewColorPalette(context);
                   Navigator.of(context).pop();
                 },
                 child: Text("SALVAR"),
@@ -79,5 +81,14 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
     _controller.dispose();
     super.dispose();
   }
+
+  void saveNewColorPalette(BuildContext context) {
+    List<int> colors = BlocProvider.of<ColorsFormBloc>(context).state.colors;
+    final newColorPalette =
+        ColorPalette(id: '', colors: colors, title: _controller.text);
+    BlocProvider.of<ColorPaletteBloc>(context)
+        .add(ColorPaletteCreate(newColorPalette));
+  }
+
+  void editExistingColorPalette(BuildContext context) {}
 }
-//vou reiniciar

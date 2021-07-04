@@ -4,7 +4,7 @@ import 'package:color_palette/bloc/color_palatte_state.dart';
 import 'package:color_palette/bloc/color_palette_bloc.dart';
 import 'package:color_palette/bloc/color_palette_event.dart';
 import 'package:color_palette/views/create_color_palette_screen.dart';
-import 'package:color_palette/views/empyt_color_pallette_screen.dart';
+import 'package:color_palette/views/empty_color_pallette_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +32,6 @@ class ListColorPalettes extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            //prover colorsForm (primeira vez) e colorpalette.value
             Navigator.of(context).push(MaterialPageRoute(
               builder: (_) {
                 return MultiBlocProvider(
@@ -41,11 +40,11 @@ class ListColorPalettes extends StatelessWidget {
                       value: BlocProvider.of<ColorPaletteBloc>(context),
                     ),
                     BlocProvider<ColorsFormBloc>(
-                      create: (_) =>
-                          ColorsFormBloc(ColorsFormState(initialColors)),
+                      create: (_) => ColorsFormBloc(
+                          ColorsFormState(colors: initialColors)),
                     )
                   ],
-                  child: CreateColorPaletteScreen(),
+                  child: CreateColorPaletteScreen(editing: false),
                 );
               },
             ));
@@ -65,25 +64,42 @@ class ListColorPalettes extends StatelessWidget {
             return ListView.builder(
                 itemCount: state.list.length,
                 itemBuilder: (context, index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    child: ListTile(
-                      title: Text(
-                        "${state.list[index].title}",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      trailing: Icon(
-                        Icons.edit,
-                        color: Colors.black,
-                      ),
-                      tileColor: Colors.white,
-                      // onTap: Navigator.of(context).push(MaterialPageRoute(),
-                      shape: CircleBorder(side: BorderSide()),
-                      contentPadding: EdgeInsets.all(10),
-                      subtitle: Container(
-                        child: Row(
-                            children: circle_colors(state.list[index].colors)),
-                      ),
+                  return ListTile(
+                    title: Text(
+                      "${state.list[index].title}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    trailing: Icon(
+                      Icons.edit,
+                      color: Colors.black,
+                    ),
+                    tileColor: Colors.white,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) {
+                          return MultiBlocProvider(
+                            providers: [
+                              BlocProvider.value(
+                                value:
+                                    BlocProvider.of<ColorPaletteBloc>(context),
+                              ),
+                              BlocProvider<ColorsFormBloc>(create: (_) {
+                                List<int> paletteColorsList =
+                                    state.list[index].colors;
+                                String title = state.list[index].title;
+                                return ColorsFormBloc(ColorsFormState(
+                                    colors: paletteColorsList, title: title));
+                              })
+                            ],
+                            child: CreateColorPaletteScreen(editing: true),
+                          );
+                        },
+                      ));
+                    },
+                    contentPadding: EdgeInsets.all(10),
+                    subtitle: Container(
+                      child:
+                          Row(children: colorCircles(state.list[index].colors)),
                     ),
                   );
                 });
@@ -91,7 +107,7 @@ class ListColorPalettes extends StatelessWidget {
             bloc.add(ColorPaletteFetchList());
             return Center(child: CircularProgressIndicator());
           } else if (state is ColorPaletteEmptyList) {
-            return EmpytListPage();
+            return EmptyListPage();
           } else {
             print('Estado não implementado');
             return Container();
@@ -100,16 +116,17 @@ class ListColorPalettes extends StatelessWidget {
   }
 }
 
-List<Widget> circle_colors(List<int> lista) {
+List<Widget> colorCircles(List<int> colorsList) {
   List<Widget> list = [];
   for (int i = 0; i < 5; i++) {
-    Widget circulo = CircleAvatar(
-      backgroundColor: Color(lista[i]),
+    Widget circle = Padding(
+      padding: EdgeInsets.all(5),
+      child: CircleAvatar(
+        backgroundColor: Color(colorsList[i]).withAlpha(0xff),
+        radius: 10,
+      ),
     );
-    list.add(circulo);
-    list.add(SizedBox(
-      width: 15,
-    ));
+    list.add(circle);
   }
   return list;
 }
