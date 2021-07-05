@@ -28,7 +28,7 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
     double screenHeight = MediaQuery.of(context).size.height -
         appBar.preferredSize.height -
         MediaQuery.of(context).padding.top;
-    print(_controller.text);
+
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -90,5 +90,16 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
         .add(ColorPaletteCreate(newColorPalette));
   }
 
-  void editExistingColorPalette(BuildContext context) {}
+  void editExistingColorPalette(BuildContext context) {
+    ColorsFormBloc colorsFormBloc = BlocProvider.of<ColorsFormBloc>(context);
+    List<int> colors = colorsFormBloc.state.colors;
+    String? id = colorsFormBloc.state.id;
+    final newColorPalette =
+        ColorPalette(id: id, colors: colors, title: _controller.text);
+
+    ColorPaletteBloc colorPaletteBloc =
+        BlocProvider.of<ColorPaletteBloc>(context);
+
+    colorPaletteBloc.add(ColorPaletteEdit(newColorPalette));
+  }
 }

@@ -41,7 +41,8 @@ class ListColorPalettes extends StatelessWidget {
                     ),
                     BlocProvider<ColorsFormBloc>(
                       create: (_) => ColorsFormBloc(
-                          ColorsFormState(colors: initialColors)),
+                          //id nulo pois é caso de criação de nova paleta
+                          ColorsFormState(id: '', colors: initialColors)),
                     )
                   ],
                   child: CreateColorPaletteScreen(editing: false),
@@ -51,7 +52,6 @@ class ListColorPalettes extends StatelessWidget {
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.grey[700],
-          //Coloquei cores aqui mas não sei se vai ter mesmo
         ),
         backgroundColor: Colors.grey,
         body: BlocBuilder<ColorPaletteBloc, ColorPaletteState>(
@@ -75,6 +75,7 @@ class ListColorPalettes extends StatelessWidget {
                     ),
                     tileColor: Colors.white,
                     onTap: () {
+                      //id nao nulo pois é caso de edição de paleta existente
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (_) {
                           return MultiBlocProvider(
@@ -87,8 +88,11 @@ class ListColorPalettes extends StatelessWidget {
                                 List<int> paletteColorsList =
                                     state.list[index].colors;
                                 String title = state.list[index].title;
+                                late String id = state.list[index].id;
                                 return ColorsFormBloc(ColorsFormState(
-                                    colors: paletteColorsList, title: title));
+                                    colors: paletteColorsList,
+                                    title: title,
+                                    id: id));
                               })
                             ],
                             child: CreateColorPaletteScreen(editing: true),
@@ -103,11 +107,14 @@ class ListColorPalettes extends StatelessWidget {
                     ),
                   );
                 });
-          } else if (state is ColorPaletteAdded) {
+          } else if (state is ColorPaletteAdded ||
+              state is ColorPaletteEdited) {
             bloc.add(ColorPaletteFetchList());
             return Center(child: CircularProgressIndicator());
           } else if (state is ColorPaletteEmptyList) {
             return EmptyListPage();
+          } else if (state is ColorPaletteErrorState) {
+            return Text('${state.message}');
           } else {
             print('Estado não implementado');
             return Container();

@@ -3,10 +3,10 @@ class ColorPalette {
   late final String title;
   late final List<int> colors;
 
-  ColorPalette({required String id, required this.title, required this.colors});
+  ColorPalette({required this.id, required this.title, required this.colors});
 
   ColorPalette.fromJson(String id, Map<String, dynamic> json) {
-    id = id;
+    this.id = id;
     title = json['title'];
     colors = json['colors'].cast<int>();
   }

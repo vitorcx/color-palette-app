@@ -1,43 +1,63 @@
+import 'package:color_palette/bloc/color_field_bloc/colors_form_bloc.dart';
+import 'package:color_palette/bloc/color_field_bloc/colors_form_state.dart';
+import 'package:color_palette/bloc/color_palette_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:color_palette/views/create_color_palette_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmptyListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Sua lista de Palletas",
-          style: TextStyle(fontSize: 20),
-        ),
-        backgroundColor: Colors.red,
-      ),
-      body: Column(
-        children: [
-          Padding(padding: EdgeInsets.fromLTRB(200, 50, 200, 200)),
-          Text(
-            "Não foi possível Encontrar listas :(",
+    List<int> initialColors = [
+      83947283,
+      92377722,
+      88366633,
+      91011123,
+      12345678
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 100),
+          child: Text(
+            'Você ainda não tem nenhuma \n paleta de cores :(',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 17,
             ),
           ),
-          Padding(padding: EdgeInsets.all(100)),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        CreateColorPaletteScreen(editing: false)),
-              );
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 50),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: BlocProvider.of<ColorPaletteBloc>(context),
+                      ),
+                      BlocProvider<ColorsFormBloc>(
+                        create: (_) => ColorsFormBloc(
+                            //id nulo pois é caso de criação de nova paleta
+                            ColorsFormState(id: '', colors: initialColors)),
+                      )
+                    ],
+                    child: CreateColorPaletteScreen(editing: false),
+                  );
+                },
+              ));
             },
-            child: Text("Criar novas pallteas"),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+            child: Text(
+              'Experimente criar uma\n agora!',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

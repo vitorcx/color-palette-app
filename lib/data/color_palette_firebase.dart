@@ -12,6 +12,10 @@ class ColorPaletteFirebase {
     await _firebaseFirestore.doc(id).delete();
   }
 
+  Future<void> editColorPalette(String id, Map<String, dynamic> newData) async {
+    await _firebaseFirestore.doc(id).set(newData);
+  }
+
   Future<List<ColorPalette>> getColorPalettes() async {
     QuerySnapshot snapshot =
         await _firebaseFirestore.collection('color_palettes').get();
