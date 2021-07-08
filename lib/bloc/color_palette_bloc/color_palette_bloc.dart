@@ -14,7 +14,7 @@ class ColorPaletteBloc extends Bloc<ColorPaletteEvent, ColorPaletteState> {
   Stream<ColorPaletteState> mapEventToState(ColorPaletteEvent event) async* {
     switch (event.runtimeType) {
       case ColorPaletteFetchList:
-        //yield ColorPaletteLoading();
+        yield ColorPaletteLoading();
         List<ColorPalette> colorPaletteList =
             await colorPaletteFirebase.getColorPalettes();
         if (colorPaletteList.isEmpty) {

@@ -58,7 +58,11 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
             IconButton(
               alignment: Alignment.center,
               icon: Icon(Icons.refresh),
-              onPressed: () {},
+              onPressed: () {
+                colorsFormBloc.add(RandomizeColorsFormEvent(
+                    title: colorsFormBloc.state.title,
+                    id: colorsFormBloc.state.id));
+              },
               color: Colors.black,
               iconSize: 80,
             ),

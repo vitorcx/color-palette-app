@@ -15,6 +15,12 @@ class ColorsFormBloc extends Bloc<ColorsFormEvent, ColorsFormState> {
       if (event.index >= 0) //index > 0 => válido
         state.colors[event.index] = newColor;
       yield state;
+    } else if (event is RandomizeColorsFormEvent) {
+      List<int> randomColors =
+          List.generate(5, (index) => Random().nextInt(0xffffffff));
+      ColorsFormState state = ColorsFormState(
+          id: event.id, title: event.title, colors: randomColors);
+      yield state;
     } else {
       throw Exception('Event not found');
     }

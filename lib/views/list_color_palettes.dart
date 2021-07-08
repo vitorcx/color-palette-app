@@ -8,8 +8,19 @@ import 'package:color_palette/views/empty_color_pallette_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListColorPalettes extends StatelessWidget {
+class ListColorPalettes extends StatefulWidget {
   const ListColorPalettes({Key? key}) : super(key: key);
+
+  @override
+  _ListColorPalettesState createState() => _ListColorPalettesState();
+}
+
+class _ListColorPalettesState extends State<ListColorPalettes> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<ColorPaletteBloc>(context).add(ColorPaletteFetchList());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +71,9 @@ class ListColorPalettes extends StatelessWidget {
         body: BlocBuilder<ColorPaletteBloc, ColorPaletteState>(
             builder: (context, state) {
           ColorPaletteBloc bloc = BlocProvider.of<ColorPaletteBloc>(context);
-          bloc.add(ColorPaletteFetchList());
           if (state is ColorPaletteLoading) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(color: Colors.black));
           } else if (state is ColorPaletteLoaded) {
             return ListView.builder(
                 itemCount: state.list.length,
@@ -122,7 +133,7 @@ class ListColorPalettes extends StatelessWidget {
               state is ColorPaletteEdited ||
               state is ColorPaletteDeleted) {
             bloc.add(ColorPaletteFetchList());
-            return Center(child: CircularProgressIndicator());
+            return Container();
           } else if (state is ColorPaletteEmptyList) {
             return EmptyListPage();
           } else if (state is ColorPaletteErrorState) {

@@ -14,3 +14,10 @@ class ChangeColorsFormEvent extends ColorsFormEvent {
       required this.title,
       required this.id});
 }
+
+class RandomizeColorsFormEvent extends ColorsFormEvent {
+  final String title;
+  final String id;
+
+  const RandomizeColorsFormEvent({required this.title, required this.id});
+}
