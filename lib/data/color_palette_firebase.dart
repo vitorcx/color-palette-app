@@ -9,7 +9,7 @@ class ColorPaletteFirebase {
   }
 
   Future<void> removeColorPalette(String id) async {
-    await _firebaseFirestore.doc(id).delete();
+    await _firebaseFirestore.doc('color_palettes/$id').delete();
   }
 
   Future<void> editColorPalette(String id, Map<String, dynamic> newData) async {

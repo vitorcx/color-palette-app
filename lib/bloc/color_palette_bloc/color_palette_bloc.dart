@@ -24,6 +24,15 @@ class ColorPaletteBloc extends Bloc<ColorPaletteEvent, ColorPaletteState> {
         }
         break;
       case ColorPaletteDelete:
+        event as ColorPaletteDelete;
+        try {
+          await colorPaletteFirebase.removeColorPalette(event.id);
+          yield ColorPaletteDeleted();
+        } catch (e) {
+          print(e.toString());
+          yield ColorPaletteErrorState(
+              message: "Erro ao deletar paleta no Firebase");
+        }
         break;
       case ColorPaletteEdit:
         event as ColorPaletteEdit;

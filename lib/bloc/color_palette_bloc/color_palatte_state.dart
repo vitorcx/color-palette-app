@@ -21,6 +21,8 @@ class ColorPaletteLoaded extends ColorPaletteState {
 
 class ColorPaletteAdded extends ColorPaletteState {}
 
+class ColorPaletteDeleted extends ColorPaletteState {}
+
 class ColorPaletteEdited extends ColorPaletteState {}
 
 class ColorPaletteEmptyList extends ColorPaletteState {}

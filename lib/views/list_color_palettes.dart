@@ -28,7 +28,7 @@ class ListColorPalettes extends StatelessWidget {
           ),
           centerTitle: true,
           elevation: 10,
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white,
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -56,7 +56,7 @@ class ListColorPalettes extends StatelessWidget {
           child: Icon(Icons.add),
           backgroundColor: Colors.grey[700],
         ),
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         body: BlocBuilder<ColorPaletteBloc, ColorPaletteState>(
             builder: (context, state) {
           ColorPaletteBloc bloc = BlocProvider.of<ColorPaletteBloc>(context);
@@ -67,51 +67,60 @@ class ListColorPalettes extends StatelessWidget {
             return ListView.builder(
                 itemCount: state.list.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      "${state.list[index].title}",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: Icon(
-                      Icons.edit,
-                      color: Colors.black,
-                    ),
-                    tileColor: Colors.white,
-                    onTap: () {
-                      //id nao nulo pois é caso de edição de paleta existente
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) {
-                          return MultiBlocProvider(
-                            providers: [
-                              BlocProvider.value(
-                                value:
-                                    BlocProvider.of<ColorPaletteBloc>(context),
-                              ),
-                              BlocProvider<ColorsFormBloc>(create: (context) {
-                                List<int> paletteColorsList =
-                                    state.list[index].colors;
-                                String paleteTitle = state.list[index].title;
-                                String paleteId = state.list[index].id;
-                                return ColorsFormBloc(ColorsFormState(
-                                    colors: paletteColorsList,
-                                    title: paleteTitle,
-                                    id: paleteId));
-                              })
-                            ],
-                            child: CreateColorPaletteScreen(editing: true),
-                          );
-                        },
-                      ));
+                  return Dismissible(
+                    key: ValueKey(state.list[index]),
+                    onDismissed: (direction) {
+                      bloc.add(ColorPaletteDelete(
+                          id: state.list[index].id)); //implementar bloc e state
                     },
-                    contentPadding: EdgeInsets.all(10),
-                    subtitle: Container(
-                      child:
-                          Row(children: colorCircles(state.list[index].colors)),
+                    background: Container(color: Colors.red),
+                    child: ListTile(
+                      title: Text(
+                        "${state.list[index].title}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      trailing: Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
+                      tileColor: Colors.white,
+                      onTap: () {
+                        //id nao nulo pois é caso de edição de paleta existente
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) {
+                            return MultiBlocProvider(
+                              providers: [
+                                BlocProvider.value(
+                                  value: BlocProvider.of<ColorPaletteBloc>(
+                                      context),
+                                ),
+                                BlocProvider<ColorsFormBloc>(create: (context) {
+                                  List<int> paletteColorsList =
+                                      state.list[index].colors;
+                                  String paleteTitle = state.list[index].title;
+                                  String paleteId = state.list[index].id;
+                                  return ColorsFormBloc(ColorsFormState(
+                                      colors: paletteColorsList,
+                                      title: paleteTitle,
+                                      id: paleteId));
+                                })
+                              ],
+                              child: CreateColorPaletteScreen(editing: true),
+                            );
+                          },
+                        ));
+                      },
+                      contentPadding: EdgeInsets.all(10),
+                      subtitle: Container(
+                        child: Row(
+                            children: colorCircles(state.list[index].colors)),
+                      ),
                     ),
                   );
                 });
           } else if (state is ColorPaletteAdded ||
-              state is ColorPaletteEdited) {
+              state is ColorPaletteEdited ||
+              state is ColorPaletteDeleted) {
             bloc.add(ColorPaletteFetchList());
             return Center(child: CircularProgressIndicator());
           } else if (state is ColorPaletteEmptyList) {

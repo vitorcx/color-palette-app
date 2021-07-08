@@ -8,7 +8,11 @@ class ColorPaletteEvent extends Equatable {
 
 class ColorPaletteFetchList extends ColorPaletteEvent {}
 
-class ColorPaletteDelete extends ColorPaletteEvent {}
+class ColorPaletteDelete extends ColorPaletteEvent {
+  final String id;
+
+  ColorPaletteDelete({required this.id});
+}
 
 class ColorPaletteEdit extends ColorPaletteEvent {
   final ColorPalette colorPalette;
