@@ -8,10 +8,12 @@ class ColorsFormBloc extends Bloc<ColorsFormEvent, ColorsFormState> {
 
   @override
   Stream<ColorsFormState> mapEventToState(ColorsFormEvent event) async* {
-    if (event is ChangeColorEvent) {
-      ColorsFormState state = ColorsFormState(id: '', colors: event.colors);
+    if (event is ChangeColorsFormEvent) {
+      ColorsFormState state = ColorsFormState(
+          id: event.id, colors: event.colors, title: event.title);
       int newColor = Random().nextInt(0xffffffff);
-      state.colors[event.index] = newColor;
+      if (event.index >= 0) //index > 0 => válido
+        state.colors[event.index] = newColor;
       yield state;
     } else {
       throw Exception('Event not found');

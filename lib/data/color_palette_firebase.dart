@@ -13,7 +13,7 @@ class ColorPaletteFirebase {
   }
 
   Future<void> editColorPalette(String id, Map<String, dynamic> newData) async {
-    await _firebaseFirestore.doc(id).set(newData);
+    await _firebaseFirestore.doc('color_palettes/$id').update(newData);
   }
 
   Future<List<ColorPalette>> getColorPalettes() async {

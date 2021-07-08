@@ -1,8 +1,8 @@
 import 'package:color_palette/bloc/color_field_bloc/colors_form_bloc.dart';
 import 'package:color_palette/bloc/color_field_bloc/colors_form_state.dart';
-import 'package:color_palette/bloc/color_palatte_state.dart';
-import 'package:color_palette/bloc/color_palette_bloc.dart';
-import 'package:color_palette/bloc/color_palette_event.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palatte_state.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palette_bloc.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palette_event.dart';
 import 'package:color_palette/views/create_color_palette_screen.dart';
 import 'package:color_palette/views/empty_color_pallette_screen.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,10 @@ class ListColorPalettes extends StatelessWidget {
                     BlocProvider<ColorsFormBloc>(
                       create: (_) => ColorsFormBloc(
                           //id nulo pois é caso de criação de nova paleta
-                          ColorsFormState(id: '', colors: initialColors)),
+                          ColorsFormState(
+                              id: '',
+                              colors: initialColors,
+                              title: 'Nova Paleta')),
                     )
                   ],
                   child: CreateColorPaletteScreen(editing: false),
@@ -84,15 +87,15 @@ class ListColorPalettes extends StatelessWidget {
                                 value:
                                     BlocProvider.of<ColorPaletteBloc>(context),
                               ),
-                              BlocProvider<ColorsFormBloc>(create: (_) {
+                              BlocProvider<ColorsFormBloc>(create: (context) {
                                 List<int> paletteColorsList =
                                     state.list[index].colors;
-                                String title = state.list[index].title;
-                                late String id = state.list[index].id;
+                                String paleteTitle = state.list[index].title;
+                                String paleteId = state.list[index].id;
                                 return ColorsFormBloc(ColorsFormState(
                                     colors: paletteColorsList,
-                                    title: title,
-                                    id: id));
+                                    title: paleteTitle,
+                                    id: paleteId));
                               })
                             ],
                             child: CreateColorPaletteScreen(editing: true),

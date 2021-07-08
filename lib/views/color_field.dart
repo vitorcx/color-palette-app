@@ -21,7 +21,11 @@ class ColorField extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       BlocProvider.of<ColorsFormBloc>(context).add(
-                          ChangeColorEvent(colors: state.colors, index: index));
+                          ChangeColorsFormEvent(
+                              colors: state.colors,
+                              index: index,
+                              title: state.title,
+                              id: state.id));
                     },
                     icon: Icon(Icons.refresh))
               ],

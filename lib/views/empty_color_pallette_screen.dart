@@ -1,6 +1,6 @@
 import 'package:color_palette/bloc/color_field_bloc/colors_form_bloc.dart';
 import 'package:color_palette/bloc/color_field_bloc/colors_form_state.dart';
-import 'package:color_palette/bloc/color_palette_bloc.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palette_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:color_palette/views/create_color_palette_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +42,10 @@ class EmptyListPage extends StatelessWidget {
                       BlocProvider<ColorsFormBloc>(
                         create: (_) => ColorsFormBloc(
                             //id nulo pois é caso de criação de nova paleta
-                            ColorsFormState(id: '', colors: initialColors)),
+                            ColorsFormState(
+                                id: '',
+                                colors: initialColors,
+                                title: 'Nova Paleta')),
                       )
                     ],
                     child: CreateColorPaletteScreen(editing: false),

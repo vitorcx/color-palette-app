@@ -1,5 +1,5 @@
-import 'package:color_palette/bloc/color_palatte_state.dart';
-import 'package:color_palette/bloc/color_palette_event.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palatte_state.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palette_event.dart';
 import 'package:color_palette/data/color_palette_firebase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:color_palette/models/color_palette_model.dart';
@@ -32,6 +32,7 @@ class ColorPaletteBloc extends Bloc<ColorPaletteEvent, ColorPaletteState> {
               event.colorPalette.id, event.colorPalette.toJson());
           yield ColorPaletteEdited();
         } catch (e) {
+          print(e.toString());
           yield ColorPaletteErrorState(
               message: 'Erro ao editar dados do Firebase.');
         }

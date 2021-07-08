@@ -1,7 +1,7 @@
 class ColorPalette {
-  late final String id;
-  late final String title;
-  late final List<int> colors;
+  late String id;
+  late String title;
+  late List<int> colors;
 
   ColorPalette({required this.id, required this.title, required this.colors});
 

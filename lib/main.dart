@@ -1,8 +1,5 @@
-import 'package:color_palette/bloc/color_palatte_state.dart';
-import 'package:color_palette/bloc/color_palette_bloc.dart';
-import 'package:color_palette/data/color_palette_firebase.dart';
-import 'package:color_palette/models/color_palette_model.dart';
-import 'package:color_palette/views/create_color_palette_screen.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palatte_state.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palette_bloc.dart';
 import 'package:color_palette/views/list_color_palettes.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

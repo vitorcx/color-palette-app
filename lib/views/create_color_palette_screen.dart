@@ -1,6 +1,8 @@
 import 'package:color_palette/bloc/color_field_bloc/colors_form_bloc.dart';
-import 'package:color_palette/bloc/color_palette_bloc.dart';
-import 'package:color_palette/bloc/color_palette_event.dart';
+import 'package:color_palette/bloc/color_field_bloc/colors_form_event.dart';
+import 'package:color_palette/bloc/color_field_bloc/colors_form_state.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palette_bloc.dart';
+import 'package:color_palette/bloc/color_palette_bloc/color_palette_event.dart';
 import 'package:color_palette/models/color_palette_model.dart';
 import 'package:color_palette/views/color_field.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +20,17 @@ class CreateColorPaletteScreen extends StatefulWidget {
 
 class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
   final TextEditingController _controller = TextEditingController();
+  late ColorsFormBloc colorsFormBloc;
 
   @override
   Widget build(BuildContext context) {
-    ColorsFormBloc bloc = BlocProvider.of<ColorsFormBloc>(context);
-    _controller.text = bloc.state.title ?? 'Nova Paleta';
+    colorsFormBloc = BlocProvider.of<ColorsFormBloc>(context);
+    _controller.text = colorsFormBloc.state.title;
     AppBar appBar =
         AppBar(title: Text('Nova Paleta de Cores'), centerTitle: true);
     double screenHeight = MediaQuery.of(context).size.height -
         appBar.preferredSize.height -
         MediaQuery.of(context).padding.top;
-
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -37,9 +39,15 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
           alignment: Alignment.bottomCenter,
           child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
             TextField(
-              textAlign: TextAlign.center,
-              controller: _controller,
-            ),
+                textAlign: TextAlign.center,
+                controller: _controller,
+                onChanged: (value) {
+                  colorsFormBloc.add(ChangeColorsFormEvent(
+                      index: -1,
+                      id: colorsFormBloc.state.id,
+                      title: value,
+                      colors: colorsFormBloc.state.colors));
+                }),
             Column(
               children: [
                 for (int i = 0; i < 5; i++) ColorField(index: i),
@@ -58,8 +66,8 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   widget.editing
-                      ? editExistingColorPalette(context)
-                      : saveNewColorPalette(context);
+                      ? editExistingColorPalette(colorsFormBloc.state)
+                      : saveNewColorPalette(colorsFormBloc.state);
                   Navigator.of(context).pop();
                 },
                 child: Text("SALVAR"),
@@ -82,20 +90,17 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
     super.dispose();
   }
 
-  void saveNewColorPalette(BuildContext context) {
-    List<int> colors = BlocProvider.of<ColorsFormBloc>(context).state.colors;
+  void saveNewColorPalette(ColorsFormState state) {
+    List<int> colors = colorsFormBloc.state.colors;
     final newColorPalette =
         ColorPalette(id: '', colors: colors, title: _controller.text);
     BlocProvider.of<ColorPaletteBloc>(context)
         .add(ColorPaletteCreate(newColorPalette));
   }
 
-  void editExistingColorPalette(BuildContext context) {
-    ColorsFormBloc colorsFormBloc = BlocProvider.of<ColorsFormBloc>(context);
-    List<int> colors = colorsFormBloc.state.colors;
-    String? id = colorsFormBloc.state.id;
+  void editExistingColorPalette(ColorsFormState state) {
     final newColorPalette =
-        ColorPalette(id: id, colors: colors, title: _controller.text);
+        ColorPalette(id: state.id, colors: state.colors, title: state.title);
 
     ColorPaletteBloc colorPaletteBloc =
         BlocProvider.of<ColorPaletteBloc>(context);
