@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:color_palette/bloc/color_field_bloc/colors_form_bloc.dart';
 import 'package:color_palette/bloc/color_field_bloc/colors_form_state.dart';
 import 'package:color_palette/bloc/color_palette_bloc/color_palette_bloc.dart';
@@ -8,13 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class EmptyListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<int> initialColors = [
-      83947283,
-      92377722,
-      88366633,
-      91011123,
-      12345678
-    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -44,7 +39,8 @@ class EmptyListPage extends StatelessWidget {
                             //id nulo pois é caso de criação de nova paleta
                             ColorsFormState(
                                 id: '',
-                                colors: initialColors,
+                                colors: List.generate(
+                                    5, (index) => Random().nextInt(0xffffffff)),
                                 title: 'Nova Paleta')),
                       )
                     ],
