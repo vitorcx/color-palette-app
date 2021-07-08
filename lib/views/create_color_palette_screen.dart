@@ -26,6 +26,8 @@ class _CreateColorPaletteScreenState extends State<CreateColorPaletteScreen> {
   Widget build(BuildContext context) {
     colorsFormBloc = BlocProvider.of<ColorsFormBloc>(context);
     _controller.text = colorsFormBloc.state.title;
+    _controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: _controller.text.length));
     AppBar appBar =
         AppBar(title: Text('Nova Paleta de Cores'), centerTitle: true);
     double screenHeight = MediaQuery.of(context).size.height -
